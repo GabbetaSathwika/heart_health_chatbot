@@ -6,7 +6,7 @@ Attributes used for project are(from dataset): Age, Sex, Cholesterol, ChestpainT
 
 **Execution Process:**
 To execute this first we need to install python in our system...
-Then flask webframe needed to be installed...(pip install flask)
+Then flask web framework needed to be installed...(pip install flask)
 Next download all the code available here...
 In command prompt enter the directory where you saved the code
 Then execute ml.py
