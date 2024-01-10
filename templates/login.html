@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Login</title>
+  <style>
+    body {
+      	background-image:url('/static/photo2.jpg');
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-attachment: fixed;
+	overflow: hidden;
+    }
+    .container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    form {
+      position:fixed;
+    }
+    .form-group {
+      margin-bottom: 30px; /* Increased margin between form groups */
+    }
+
+    label {
+      display: block;
+      font-weight: bold;
+      font-size: 18px; /* Increased label font size */
+    }
+
+    input[type="email"],
+    input[type="password"] {
+      width: 120%;
+      padding: 10px; /* Increased input padding */
+      font-size: 16px; /* Increased input font size */
+      border: 1px solid black;
+      border-radius: 3px;
+    }
+
+    button[type="submit"] {
+      width: 150px;
+      padding: 10px 5px; /* Increased button padding */
+      font-size: 12px; /* Increased button font size */
+      background-color: black;
+      color: white;
+      border: none;
+      border-radius: 2px;
+      cursor: pointer;
+      margin:auto;
+      display:block
+    }
+    button[type="submit"]:hover {
+      background-color: #333;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <form>
+      <h1 style="color: black; text-align: center;">Login</h1>
+      <div class="form-group">
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+      </div>
+      <div class="form-group">
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+      </div>
+      <div class="form-group">
+        <a href="#" id="forgot-password-link">Forgot Password?</a><br><br>
+        <button type="submit" id="login-btn">Login</button>
+      </div>
+    </form>
+    <form id="forgot-password-form" style="display: none;">
+      <h2 style="color: black; text-align: center;">Forgot Password</h2>
+      <div class="form-group">
+        <label for="forgot-password-email">Enter your email address:</label>
+        <input type="email" id="forgot-password-email" name="forgot-password-email" required>
+      </div>
+      <div class="form-group">
+        <label for="new-password">New Password:</label>
+        <input type="password" id="new-password" name="new-password" required>
+      </div>
+      <div class="form-group">
+        <label for="confirm-password">Confirm Password:</label>
+        <input type="password" id="confirm-password" name="confirm-password" required>
+      </div>
+      <div class="form-group">
+        <button type="button" id="change-password-btn">Change Password</button>
+      </div>
+    </form>
+  </div>
+
+  <script>
+    const emailInput = document.getElementById('email');
+    const passwordInput = document.getElementById('password');
+    const loginBtn = document.getElementById('login-btn');
+    const forgotPasswordLink = document.getElementById('forgot-password-link');
+    const forgotPasswordForm = document.getElementById('forgot-password-form');
+    const forgotPasswordEmailInput = document.getElementById('forgot-password-email');
+    const newPasswordInput = document.getElementById('new-password');
+    const confirmPasswordInput = document.getElementById('confirm-password');
+    const changePasswordBtn = document.getElementById('change-password-btn');
+
+    loginBtn.addEventListener('click', (event) => {
+      event.preventDefault();
+
+      const email = emailInput.value;
+      const password = passwordInput.value;
+
+      // Check if email and password match
+      if (localStorage.getItem(email) === password) {
+        // Redirect to chatbot page
+        redirectTochatbot();
+      } else {
+        alert('Email and password do not match.');
+      }
+    });
+
+    forgotPasswordLink.addEventListener('click', () => {
+      // Hide login form and show forgot password form
+      document.querySelector('form').style.display = 'none';
+      forgotPasswordForm.style.display = 'block';
+    });
+
+    changePasswordBtn.addEventListener('click', () => {
+      const email = forgotPasswordEmailInput.value;
+      const newPassword = newPasswordInput.value;
+      const confirmPassword = confirmPasswordInput.value;
+
+      if (newPassword !== confirmPassword) {
+        alert('New password and confirm password do not match.');
+        return;
+      }
+
+      // Update password in local storage
+      localStorage.setItem(email, newPassword);
+
+      // Show login form and hide forgot password form
+      document.querySelector('form').style.display = 'block';
+      forgotPasswordForm.style.display = 'none';
+    });
+
+    function redirectTochatbot() {
+      var chatboturl="{{ url_for('chatbot') }}";
+      window.location.href = chatboturl;
+    }
+  </script>
+</body>
+</html>

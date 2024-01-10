@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Heart Health Chatbot</title>
+	<style>
+		body{
+			background-image:url('/static/photo1.jpg');
+			background-color:#ccc;
+			background-repeat: no-repeat;
+			background-size: cover;
+			background-attachment: fixed;
+		}
+		.container {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			margin-top: 50px;
+		}
+		.chat {
+			display: flex;
+			flex-direction: column;
+			align-items: flex-start;
+			background-color: #f1f0f0;
+			padding: 10px;
+			border-radius: 10px;
+			margin-bottom: 10px;
+			max-width: 60%;
+		}
+		.user {
+			align-self: flex-end;
+			background-color: #797D7F;
+			color: white;
+		}
+		.bot {
+			align-self: flex-start;
+			background-color: #6699CC;
+			color: white;
+			max-width: 50%;
+		}
+		.buttons {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+		}
+		button {
+			margin-bottom: 10px;
+		}
+		.left {
+			display: flex;
+			align-items: center;
+			justify-content: flex-start;
+			margin-bottom: 10px;
+		}
+		.right {
+			display: flex;
+			align-items: center;
+			justify-content: flex-end;
+			margin-bottom: 10px;
+		}
+		.right label {
+			margin-right: 10px;
+		}
+	</style>
+</head>
+<body>
+	<div class="container">
+		<h1>Heart Health Chatbot</h1>
+		<div class="chat" id="chat"></div>
+		<div class="buttons">
+			<button onclick="dietSelected()">Diet</button>
+			<button onclick="remediesSelected()">Natural Remedies</button>
+			<button onclick="causesSelected()">Causes and Precautions</button>
+			<button onclick="predictionSelected()">Prediction of Heart Disease</button>
+		</div>
+		<div id="content"></div>
+	</div>
+
+	<script>
+	const chat = document.getElementById("chat");
+
+	function sendMessage(message, sender) {
+		const div = document.createElement("div");
+		div.classList.add("chat", sender);
+		div.innerHTML = message;
+		chat.appendChild(div);
+	}
+
+	function causesSelected() {
+		sendMessage("Causes and Precautions", "user");
+		sendMessage("Please wait while we fetch information about causes and precautions...", "bot");
+		setTimeout(() => {
+var cont = "<h2>Causes and Predictions</h2>";
+    cont += "<p>Here are some resources to help you understand the causes and precautions:</p>";
+    cont+= "<ul>";
+    cont+= "<li><span class='left'><a href='https://medlineplus.gov/howtopreventheartdisease.html'>How to Prevent Heart Disease</a></span></li>";
+    cont+= "<li><span class='left'><a href='https://www.webmd.com/heart/default.htm'>Heart Health Resource Center</a></span></li>";
+    cont+= "<li><span class='left'><a href='https://www.nhs.uk/conditions/coronary-heart-disease/prevention/'>Prevention-Coronary heart disease</a></span></li>";
+    cont+= "</ul>";
+    sendMessage(cont, "bot");
+  }, 2000);
+}
+			
+
+function dietSelected() {
+  sendMessage("Diet", "user");
+  sendMessage("Please wait while we fetch information about diet...", "bot");
+  setTimeout(() => {
+    var content = "<h2>Diet</h2>";
+    content += "<p>Here are some resources to help you understand and maintain a healthy diet:</p>";
+    content += "<ul>";
+    content += "<li><span class='left'><a href='https://health.gov/sites/default/files/2019-09/2015-2020_Dietary_Guidelines.pdf'>2015-2020 Dietary Guidelines for Americans</a></span></li>";
+    content += "<li><span class='left'><a href='https://www.fda.gov/food/new-nutrition-facts-label/how-understand-and-use-nutrition-facts-label'>How to Understand and Use the Nutrition Facts Label</a></span></li>";
+    content += "<li><span class='left'><a href='https://www.who.int/news-room/fact-sheets/detail/healthy-diet'>Healthy Diet - World Health Organization (WHO)</a></span></li>";
+    content += "</ul>";
+    sendMessage(content, "bot");
+  }, 2000);
+}
+	function remediesSelected() {
+		sendMessage("Natural Remedies", "user");
+		sendMessage("Please wait while we fetch information about natural remedies...", "bot");
+		setTimeout(() => {
+			var con= "<h2>Natural remedies</h2>";
+    con+= "<p>Here are some resources to help you with natural remedies</p>";
+    con+= "<ul>";
+    con+= "<li><span class='left'><a href='https://www.webmd.com/heart-disease/features/natural-remedies-for-heart-health-help-or-harm'>Natural Remedies for Heart Health: Help or Harm?</a></span></li>";
+    con+= "<li><span class='left'><a href='https://in.iherb.com/blog/16-natural-remedies-for-a-healthy-heart/323'>Natural Ways to Support Heart Health</a></span></li>";
+    con+= "<li><span class='left'><a href='https://www.clevelandheartlab.com/blog/top-herbs-for-your-heart/'>Top Herbs for Your Heart</a></span></li>";
+    con+= "</ul>";
+    sendMessage(con, "bot");
+  }, 2000);
+}
+	function predictionSelected() {
+		sendMessage("Prediction of Heart Disease", "user");
+		sendMessage("Please enter the following information:", "bot");
+		sendMessage("<label for='age'>Age:</label><input type='number' id='age' name='age' required min='18' max='100'>", "user");
+		sendMessage("<button type='button' onclick='askSex()'>Next</button>", "user");
+	}
+
+	function askSex() {
+		const age = document.getElementById("age").value;
+		sendMessage(`<div class='left'>Age: ${age}</div>`, "bot");
+		sendMessage("<div class='right'><label for='sex'>Sex:</label><select id='sex' name='sex' required><option value='select'>Select</option><option value='male'>Male</option><option value='female'>Female</option></select></div>", "user");
+		sendMessage("<button type='button' onclick='askCp()'>Next</button>", "user");
+	}
+	function askCp() {
+    const sex = document.getElementById("sex").value;
+    sendMessage(`<div class='left'>Sex: ${sex}</div>`, "bot");
+    sendMessage("<div class='specify'>Please enter a valid range (0 to 4) for CP.</div>", "bot");
+    const cpInput = "<div class='right'><label for='cp'>Cp:</label><input type='number' id='cp' name='cp' required min='0' max='4'></div>";
+    const nextButton = "<button type='button' onclick='validateCp()'>Next</button>";
+
+    sendMessage(cpInput, "user");
+    sendMessage(nextButton, "user");
+}
+
+function validateCp() {
+    const cpValue = parseInt(document.getElementById("cp").value);
+
+    if (cpValue >= 0 && cpValue <= 4) {
+        // CP value is valid, proceed to the next step
+        askTrestbps();
+    } else {
+        // CP value is not valid, show an error message and ask for CP again
+        sendMessage("<div class='left error'>Please enter a valid range (0 to 4) for CP.</div>", "bot");
+        sendMessage("<div class='right'><label for='cp'>Cp:</label><input type='number' id='cp' name='cp' required min='0' max='4'></div>", "user");
+        sendMessage("<button type='button' onclick='validateCp()'>Next</button>", "user");
+    }
+}
+
+// Define additional functions for the next steps as needed
+
+
+
+	function askTrestbps() {
+		const cp = document.getElementById("cp").value;
+		sendMessage(`<div class='left'>Cp: ${cp}</div>`, "bot");
+		sendMessage("<div class='right'><label for='trestbps'>Trestbps:</label><input type='number' id='trestbps' name='trestbps' required min='40'></div>", "user");
+		sendMessage("<button type='button' onclick='askCholesterol()'>Next</button>", "user");
+	}
+
+	
+
+	function askCholesterol() {
+		const trestbps = document.getElementById("trestbps").value;
+		sendMessage(`<div class='left'>Trestbps: ${trestbps}</div>`, "bot");
+		sendMessage("<div class='right'><label for='chol'>Cholesterol:</label><input type='number' id='chol' name='chol' required min='100'></div>", "user");
+		sendMessage("<button type='button' onclick='predict()'>Predict</button>", "user");
+	}
+
+	function predict() {
+		const age = document.getElementById("age").value;
+		const sex = document.getElementById("sex").value=="female"?1:0;
+		const cp = document.getElementById("cp").value;
+		const trestbps = document.getElementById("trestbps").value;
+		const chol= document.getElementById("chol").value;
+		// Perform prediction using machine learning model
+		// ...
+		
+		const xhr=new XMLHttpRequest();
+		xhr.open('POST','/predict',true);
+		xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+		xhr.onload=function(){
+			if (xhr.status===200){
+				const prediction=xhr.responseText;
+				sendMessage(`<div class='left'>${prediction}</div>`,"bot");
+}
+};
+		xhr.send(`age=${age}&sex=${sex}&cp=${cp}&trestbps=${trestbps}&chol=${chol}`);
+		
+		
+		setTimeout(() => {
+			sendMessage("Thank you for using our chatbot. Goodbye!", "bot");
+		}, 2000);
+	}
+
+	// Greeting message
+	sendMessage("Hello! I am a chatbot designed to help you with information about heart disease. Please select one of the options below to get started.", "bot");
+
+	// Goodbye message
+	window.addEventListener("beforeunload", function() {
+		sendMessage("Thank you for using our chatbot. Goodbye!", "bot");
+
+	});
+</script>
+</body>
+</html>
